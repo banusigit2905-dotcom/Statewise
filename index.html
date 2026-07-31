@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StatWise - Personal Finance Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Library untuk membaca Excel (XLSX) -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- Library untuk membaca PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>StatWise <span>📊</span></h1>
+            <p>Kelola e-Statement Anda dengan mudah dan aman.</p>
+        </header>
+
+        <!-- Bagian Upload -->
+        <section class="upload-section">
+            <div class="file-input-wrapper">
+                <input type="file" id="fileInput" accept=".csv, .xlsx, .xls, .pdf">
+                <label for="fileInput" class="btn-primary">Pilih File (CSV / XLSX / PDF)</label>
+            </div>
+            <button id="clearData" class="btn-danger">Hapus Semua Data</button>
+        </section>
+
+        <!-- Status proses PDF -->
+        <p id="pdfStatus" class="pdf-status" style="display:none;"></p>
+
+        <!-- Ringkasan Statistik -->
+        <section class="summary-cards">
+            <div class="card income">
+                <h3>Total Pemasukan</h3>
+                <p id="totalIncome">Rp 0</p>
+            </div>
+            <div class="card expense">
+                <h3>Total Pengeluaran</h3>
+                <p id="totalExpense">Rp 0</p>
+            </div>
+            <div class="card balance">
+                <h3>Saldo Akhir</h3>
+                <p id="totalBalance">Rp 0</p>
+            </div>
+        </section>
+
+        <!-- Tabel Transaksi -->
+        <section class="table-container">
+            <table id="transactionTable">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Deskripsi</th>
+                        <th>Debit (Keluar)</th>
+                        <th>Kredit (Masuk)</th>
+                        <th>Kategori</th>
+                        <th>Catatan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data akan muncul di sini -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- Modal Preview Hasil Ekstraksi PDF -->
+    <div id="pdfPreviewModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h2>Pratinjau Hasil Ekstraksi PDF</h2>
+            <p id="pdfPreviewInfo" class="modal-info"></p>
+
+            <div id="pdfPreviewTableWrap" class="modal-table-wrap">
+                <table id="pdfPreviewTable">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Deskripsi</th>
+                            <th>Debit</th>
+                            <th>Kredit</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfPreviewBody"></tbody>
+                </table>
+            </div>
+
+            <div id="pdfRawTextWrap" style="display:none;">
+                <p class="modal-info">Tidak ada transaksi yang terdeteksi otomatis. Berikut teks mentah hasil ekstraksi PDF, silakan periksa manual:</p>
+                <textarea id="pdfRawText" readonly></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button id="pdfCancelBtn" class="btn-danger">Batal</button>
+                <button id="pdfImportBtn" class="btn-primary">Impor ke Tabel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
